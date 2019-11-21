@@ -1,7 +1,19 @@
+# Web Scraping digidb.io and Transform it into MySQL Database
+
+Halo, Assalamu'alaykum..
+
+Hari ini saya akan share mengenai quiz hari ini, yaitu mengubah table dari hasil web scraping menjadi satu buah database dari website digimon.db
+
+## Let's brakedown the code
+## 1. Import the library
+```
 import mysql.connector
 import requests
 from bs4 import BeautifulSoup
+```
 
+## 2. Web Scraping from digidb.io
+```
 web = requests.get('http://digidb.io/digimon-list/')
 data = BeautifulSoup(web.content, 'html.parser')
 
@@ -52,14 +64,17 @@ for i in range(len(grouped_attributes)):
     grouped_attributes[i].append(image_list[i])
     grouped_attributes[i].insert(0,digimon_list[i])
     grouped_attributes[i].insert(0,number_list[i])
+```
 
-# ============== MAKE IT AS LIST OF TUPLES ==============
-
+## 3. Make it as list of tuples
+```
 grouped_attributes_set = []
 for i in grouped_attributes:
     grouped_attributes_set.append(tuple(i))
+```
 
-# ============== DATABASE COMPUTING START HERE ==============
+## 4. Database computing
+```
 db = mysql.connector.connect(
     host = 'localhost',
     port = 3306,
@@ -83,8 +98,10 @@ c = db.cursor()
 # ===== RENAMING 'int' COLUMN TO Int_ =====
 # c.execute('alter table digimon rename column intx to Int_')
 
-# ===== INSERT THE DATA INTO TABLE =====
+```
+## 5. Insert the data into table
+```
 sql = 'insert into digimon (no, Digimon, Stage, Type, Attribute, Memory, Equip_Slots, HP, SP, Atk, Def, intx, Spd, image_link) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
 c.executemany(sql, grouped_attributes_set)
 db.commit()
-
+```

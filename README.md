@@ -4,6 +4,8 @@ Halo, Assalamu'alaykum..
 
 Hari ini saya akan share mengenai quiz hari ini, yaitu mengubah table dari hasil web scraping menjadi satu buah database dari website digimon.db
 
+![alt text](https://github.com/ridhoaryo/20_21_Notes_JCDS_Module_2_Purwadhika/blob/master/database.jpg "Database Result")
+
 ## Let's brakedown the code
 ## 1. Import the library
 ```

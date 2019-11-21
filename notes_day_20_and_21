@@ -1,0 +1,290 @@
+1. Pastikan sudah masuk ke C:\Program Files\MySQL\MySQL Server 8.0\bin
+>> cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+2. Mengaktifkan MySQL di terminal
+>> mysql -u namauser -p;
+
+3. Melihat ada database apa saja di server kita
+>> show databases;
+
+4. Membuat database
+>> create database TokoOnline;
+
+5. Melihat hasil database yang sudah dibuat, apakah sudah ada
+>> create database if not exists TokoOnline:
+
+6. Masuk dan bekerja ke sebuah database
+>> use TokoOnline
+
+7. Melihat posisi kerja kita ada di database Mengaktifkan
+>> select database();
+
+8. Melihat tabel yang ada di database
+>> show tables;
+
+9. Membuat tabel dengan nama 'pedagang'
+>> create table pedagang (no int, nama varchar(5));
+
+10. Melihat isi tabel 'pedagang'
+>> describe pedagang;
+
+11. Menghapus database
+>> drop database TokoOnline;
+
+12. Menghapus tabel
+>> drop table pedagang;
+
+13. Menghapus seluruh data di tabel
+>> delete from pembeli;
+
+14. Melihat isi sebuah tabel
+>> select * from pedagang;
+
+15. Memasukkan data
+>> insert into pedagang values (2, 'Andi');
+>> insert into pedagang (nama) values ('Budi');
+>> insert into pedagang (nama,no) values ('Caca',25);
+
+16. Memasukkan beberapa data sekaligus
+>> insert into pedagang values(3, 'Dedi'),(6, 'Euis'),(98, 'Fafa');
+
+17. Membuat tabel dalam database
+create table karyawan(
+    -> id_karyawan bigint not null auto_increment,
+    -> nama varchar(5) default 'nonim',
+    -> sex set('pria', 'wanita'), 
+    -> gaji int default 5000000,
+    -> created_at timestamp default current_timestamp,
+    -> primary key(id_karyawan)
+    -> );
+
+18. Insert new row:
+>> insert into karyawan (nama, sex) values ('Ana', 'wanita');
+
+19. Insert multiple row:
+>> insert into karyawan (nama, sex) values                   
+    -> ('Elsa', 'wanita')
+    -> ('Kristoff', 'pria');
+
+20. Isert row with id_karyawan
+>> insert into karyawan (id_karyawan, nama, sex) values (2, 'Boni', 'pria');
++-------------+------+--------+---------+---------------------+
+| id_karyawan | nama | sex    | gaji    | created_at          |
++-------------+------+--------+---------+---------------------+
+|           1 | Ana  | wanita | 5000000 | 2019-11-21 09:35:24 |
+|           2 | Boni | pria   | 5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita | 5000000 | 2019-11-21 09:43:29 |
+|           5 | Olaf | pria   | 5000000 | 2019-11-21 09:43:29 |
++-------------+------+--------+---------+---------------------+
+
+21. Select all column from table
+>> select * from karyawan;
++-------------+------+--------+---------+---------------------+
+| id_karyawan | nama | sex    | gaji    | created_at          |
++-------------+------+--------+---------+---------------------+
+|           1 | Ana  | wanita | 5000000 | 2019-11-21 09:35:24 |
+|           2 | Boni | pria   | 5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita | 5000000 | 2019-11-21 09:43:29 |
+|           5 | Olaf | pria   | 5000000 | 2019-11-21 09:43:29 |
++-------------+------+--------+---------+---------------------+
+
+22. Select all columns by limiting the value
+>> select * from karyawan limit 2,1;
++-------------+------+--------+---------+---------------------+
+| id_karyawan | nama | sex    | gaji    | created_at          |
++-------------+------+--------+---------+---------------------+
+|           4 | Elsa | wanita | 5000000 | 2019-11-21 09:43:29 |
++-------------+------+--------+---------+---------------------+
+
+23. Insert new virtual column as potongan_bpjs:
+>> select nama, gaji, 0.03*gaji as potongan_bpjs from karyawan; 
++------+---------+---------------+
+| nama | gaji    | potongan_bpjs |
++------+---------+---------------+
+| Ana  | 5000000 |     150000.00 |
+| Boni | 5000000 |     150000.00 |
+| Elsa | 5000000 |     150000.00 |
+| Olaf | 5000000 |     150000.00 |
++------+---------+---------------+
+
+24. Select all columns using ORDER BY clause
+>> select * from karyawan order by gaji;
++-------------+------+--------+----------+---------------------+
+| id_karyawan | nama | sex    | gaji     | created_at          |
++-------------+------+--------+----------+---------------------+
+|           1 | Ana  | wanita |  5000000 | 2019-11-21 09:35:24 |
+|           2 | Boni | pria   |  5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita |  5000000 | 2019-11-21 09:43:29 |
+|           5 | Olaf | pria   |  5000000 | 2019-11-21 09:43:29 |
+|           6 | Raka | NULL   | 12000000 | 2019-11-21 09:57:05 |
++-------------+------+--------+----------+---------------------+
+
+25. Select all column using WHERE clause
+>> select * from karyawan where nama = 'Olaf';
++-------------+------+------+---------+---------------------+
+| id_karyawan | nama | sex  | gaji    | created_at          |
++-------------+------+------+---------+---------------------+
+|           5 | Olaf | pria | 5000000 | 2019-11-21 09:43:29 |
++-------------+------+------+---------+---------------------+
+
+26. Select column using BETWEEN clause
+>> select * from karyawan where gaji between 4000000 and 8000000;
++-------------+------+--------+---------+---------------------+
+| id_karyawan | nama | sex    | gaji    | created_at          |
++-------------+------+--------+---------+---------------------+
+|           1 | Ana  | wanita | 5000000 | 2019-11-21 09:35:24 |
+|           2 | Boni | pria   | 5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita | 5000000 | 2019-11-21 09:43:29 |
+|           5 | Olaf | pria   | 5000000 | 2019-11-21 09:43:29 |
++-------------+------+--------+---------+---------------------+
+
+27. Different between BETWEEN clause and logical statement (< or >)
+>> select * from karyawan where gaji > 5000000 and gaji < 8000000; 
+Empty set (0.00 sec)
+
+28. Select all column WHERE nama have 'a' for starting 
+>> select * from karyawan where nama like 'a%';                    
++-------------+------+--------+---------+---------------------+
+| id_karyawan | nama | sex    | gaji    | created_at          |
++-------------+------+--------+---------+---------------------+
+|           1 | Ana  | wanita | 5000000 | 2019-11-21 09:35:24 |
++-------------+------+--------+---------+---------------------+
+
+29. Count the rows
+>> select count(*) from karyawan;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+>> select count(nama) from karyawan where nama = 'Ana'; 
++-------------+
+| count(nama) |
++-------------+
+|           1 |
++-------------+
+
+30. MAX clause
+>> select max(gaji) as 'gaji tertinggi' from karyawan; 
++----------------+
+| gaji tertinggi |
++----------------+
+|       12000000 |
++----------------+
+
+31. MIN clause
+>> select min(gaji) as 'gaji terendah' from karyawan;  
++---------------+
+| gaji terendah |
++---------------+
+|       5000000 |
++---------------+
+
+32. SUM clause
+>> select sum(gaji) as 'total gaji' from karyawan;    
++------------+
+| total gaji |
++------------+
+|   32000000 |
++------------+
+
+33. AVG clause
+>> select avg(gaji) as 'rata-rata gaji' from karyawan; 
++----------------+
+| rata-rata gaji |
++----------------+
+|   6400000.0000 |
++----------------+
+
+34. Quiz Subquery: Show average 'gaji' from 'karyawan' table where 'gaji' is under all average 'gaji'
+>> select avg(gaji) from karyawan where gaji < (select avg(gaji) from karyawan); 
++--------------+
+| avg(gaji)    |
++--------------+
+| 5000000.0000 |
++--------------+
+
+35. UPDATE value
+>> update karyawan set nama = 'Joko' where sex = 'pria';
++-------------+------+--------+----------+---------------------+
+| id_karyawan | nama | sex    | gaji     | created_at          |
++-------------+------+--------+----------+---------------------+
+|           1 | Ana  | wanita |  5000000 | 2019-11-21 09:35:24 |
+|           2 | Joko | pria   |  5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita |  5000000 | 2019-11-21 09:43:29 |
+|           5 | Joko | pria   |  5000000 | 2019-11-21 09:43:29 |
+|           6 | Raka | NULL   | 12000000 | 2019-11-21 09:57:05 |
++-------------+------+--------+----------+---------------------+
+
+36. Add column
+>> alter table karyawan
+    -> add column
+    -> alamat text;
++-------------+----------------------+------+-----+-------------------+-------------------+
+| Field       | Type                 | Null | Key | Default           | Extra             |
++-------------+----------------------+------+-----+-------------------+-------------------+
+| id_karyawan | bigint(20)           | NO   | PRI | NULL              | auto_increment    |
+| nama        | varchar(5)           | YES  |     | nonim             |                   |
+| sex         | set('pria','wanita') | YES  |     | NULL              |                   |
+| gaji        | int(11)              | YES  |     | 5000000           |                   |
+| created_at  | timestamp            | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| alamat      | text                 | YES  |     | NULL              |                   |
++-------------+----------------------+------+-----+-------------------+-------------------+
+
+37. Delete column
+>> alter table karyawan
+    -> drop column alamat;
++-------------+----------------------+------+-----+-------------------+-------------------+
+| Field       | Type                 | Null | Key | Default           | Extra             |
++-------------+----------------------+------+-----+-------------------+-------------------+
+| id_karyawan | bigint(20)           | NO   | PRI | NULL              | auto_increment    |
+| nama        | varchar(5)           | YES  |     | nonim             |                   |
+| sex         | set('pria','wanita') | YES  |     | NULL              |                   |
+| gaji        | int(11)              | YES  |     | 5000000           |                   |
+| created_at  | timestamp            | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------------+----------------------+------+-----+-------------------+-------------------+
+
+38. Add column at specific place
+>> alter table karyawan
+    -> add column
+    -> alamat text
+    -> after sex;
++-------------+------+--------+--------+----------+---------------------+
+| id_karyawan | nama | sex    | alamat | gaji     | created_at          |
++-------------+------+--------+--------+----------+---------------------+
+|           1 | Ana  | wanita | NULL   |  5000000 | 2019-11-21 09:35:24 |
+|           2 | Joko | pria   | NULL   |  5000000 | 2019-11-21 09:44:15 |
+|           4 | Elsa | wanita | NULL   |  5000000 | 2019-11-21 09:43:29 |
+|           5 | Joko | pria   | NULL   |  5000000 | 2019-11-21 09:43:29 |
+|           6 | Raka | NULL   | NULL   | 12000000 | 2019-11-21 09:57:05 |
++-------------+------+--------+--------+----------+---------------------+
+
+39. Modify existing column, change type and move
+>> alter table karyawan
+    -> modify column
+    -> nama varchar(50) default 'Aonim 50'
+    -> after sex;
++-------------+----------------------+------+-----+-------------------+-------------------+
+| Field       | Type                 | Null | Key | Default           | Extra             |
++-------------+----------------------+------+-----+-------------------+-------------------+
+| id_karyawan | bigint(20)           | NO   | PRI | NULL              | auto_increment    |
+| sex         | set('pria','wanita') | YES  |     | NULL              |                   |
+| nama        | varchar(50)          | YES  |     | Aonim 50          |                   |
+| alamat      | text                 | YES  |     | NULL              |                   |
+| gaji        | int(11)              | YES  |     | 5000000           |                   |
+| created_at  | timestamp            | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------------+----------------------+------+-----+-------------------+-------------------+
+
+40. Renaming column
+>> alter table karyawan
+    -> rename column
+    -> sex to gender;
++-------------+--------+------+--------+----------+---------------------+
+| id_karyawan | gender | nama | alamat | gaji     | created_at          |
++-------------+--------+------+--------+----------+---------------------+
+|           1 | wanita | Ana  | NULL   |  5000000 | 2019-11-21 09:35:24 |
+|           2 | pria   | Joko | NULL   |  5000000 | 2019-11-21 09:44:15 |
+|           4 | wanita | Elsa | NULL   |  5000000 | 2019-11-21 09:43:29 |
+|           5 | pria   | Joko | NULL   |  5000000 | 2019-11-21 09:43:29 |
+|           6 | NULL   | Raka | NULL   | 12000000 | 2019-11-21 09:57:05 |
++-------------+--------+------+--------+----------+---------------------+
